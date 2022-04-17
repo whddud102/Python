@@ -130,3 +130,24 @@
   - 파이썬에서 리스트, 문자열, 튜플 등 **순차적인 정보를 담는 자료형을 iterable 자료형이라고 한다.**
   - in 문법은 이러한 iterable 자료형에 모두 사용이 가능하다.
   
+  
+  
+**- 사전 자료형 관련 함수**
+- 키와 값을 별도로 뽑아내기 위한 함수가 있다.
+- 키 데이터만 뽑아서 리스트로 이용할 때는 keys() 함수를 이용하며, 값 데이터만을 뽑아서 리스트로 이용할 때는 values() 함수를 이용한다.
+  
+  
+    ```Python
+      data = dict()
+      data['사과'] = 'Apple'
+      data['바나나'] = 'Banana'
+      data['코코넛'] = 'Coconut'
+      
+      # 키 데이터만 담은 리스트
+      key_list = data.keys()
+      # 값 데이터만 담은 리스트
+      value_list = data.values()
+      
+      print(key_list)  # dict_keys(['사과', '바나나', '코코넛'])
+      print(value_list)  # dict_values(['Apple', 'Banana', 'Coconut'])
+    ```
