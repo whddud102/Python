@@ -628,7 +628,19 @@ print(data)    # [1, 4, 5, 8, 9]
  
  
     
-  
+- combinations_with_replacement(조합) : combinations와 같이 리스트와 같은 iterable 객체에서 r개의 데이터를 뽑아 순서를 고려하지 않고 나열하는 모든 경우(조합)
+- (순서를 고려하지 않는다 = 순서에 의미를 두지 않겠다 = 순서가 달라도 같은 걸로 간주하겠다. ex) ab = ba)
+- combinations_with_replacement 클래스이므로 객체 초기화 이후에는 리스트 자료형으로 변환하여 사용한다.
+- 리스트 ['A', 'B', 'C'] 에서 2개 (r = 2)를 뽑아 나열하는 모든 경우를 출력하는 예시는 다음과 같다. 
+
+```python
+    from itertools import combinations_with_replacement
+    
+    data = ['A', 'B', 'C']    # 데이터 준비
+    result = list(combinations_with_replacement(data, 2))    # 2개를 뽑는 모든 조합 구하기
+    
+    print(result)    # AA, AB, AC, BB, BC, CC
+```
   
 
 
