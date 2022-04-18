@@ -644,10 +644,210 @@ print(data)    # [1, 4, 5, 8, 9]
   
 
 
-  
+## heapq 
+- 파이썬에서는 힙 기능을 위해 heapq 라이브러리를 제공한다. heapq는 다익스트라 최단 경로 알고리즘을 포함해 다양한 알고리즘에서 **우선순위 큐** 기능을 구현하고자 할 때 사용된다.
+- 파이썬의 힙은 최소 힙으로 구성되어 있으므로(최소 값을 가진 원소가 가장 위에 위치), 단순히 원소를 힙에 전부 넣었다가 빼는 것만으로도 시간 복잡도 O(NlogN)에 오름차순 정렬이 완료된다.
+- 보통 최소 힙 자료구조의 최상단 원소는 항상 '가장 작은 원소'이기 때문이다.
+- **힙에 원소를 삽입할 때는 heapq.heappush(), 힙에서 원소를 꺼내고자 할 때는 heapq.heappop() 메서드를 이용한다.**
+- 힙 정렬을 heapq로 구현하는 예제를 통해 heapq의 사용 방법을 알아보자.
+
+```python
+    import heapq
+    
+    def heapsort (iterable) :    # iterable 객체를 매개변수로 받음
+        h = []    # 데이터를 넣을 배열
+        result = []
+        
+        # 모든 원소를 차례대로 힙에 삽입
+        
+        for value in iterable :
+            heapq.heappush(h, value) = h를 힙으로 사용하여 원소를 삽입
+            
+        # 힙에 삽입된 모든 원소를 차례대로 꺼내어 담기
+        for i in range(len(h)) :    # 힙의 원소의 개수 만큼 반복
+            result.append(heapq.heappop(h))    
+        return result
+        
+    
+    result = heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+    print(result)    # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+    
+```
 
 
+- 또한 파이썬에서는 최대 힙을 제공하지 않는다.
+- 따라서 heapq 라이브러리를 이용하여 최대 힙을 구현해야 할 때는 원소의 부호를 임시로 변경하는 방식을 사용한다.
+- 힙에 원소를 삽입하기 전에 잠시 부호를 반대로 바꾸었다가, 힙에서 원소를 꺼낸 뒤에 다시 원소의 부호를 바꾸면 된다.
+- 이러한 방식으로 최대 힙을 구현하여 내림차순 힙 정렬을 구현하는 예시는 다음과 같다.
+    
+    
+    
+```python
+    import heapq
+    
+    def heapsort (iterable) :    # iterable 객체를 매개변수로 받음
+        h = []    # 데이터를 넣을 배열
+        result = []
+        
+        # 모든 원소를 차례대로 힙에 삽입
+        
+        for value in iterable :
+            heapq.heappush(h, -value) = h를 힙으로 사용하여 원소를 삽입
+            
+        # 힙에 삽입된 모든 원소를 차례대로 꺼내어 담기
+        for i in range(len(h)) :    # 힙의 원소의 개수 만큼 반복
+            result.append(-heapq.heappop(h))    
+        return result
+        
+    
+    result = heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+    print(result)    # 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+    
+```
+
+
+## bisect
+- 파이썬에서는 이진 탐색을 쉽게 구현할 수 있도록 bisect 라이브러리를 제공한다. bisect 라이브러리는 **"정렬된 배열"** 에서 특정한 원소를 찾아야 할 때 매우 효과적으로 사용된다.
+- bisect 라이브러리에서는 **bisect_left() 함수와 bisect_right() 함수**가 가장 중요하게 사용되며, 이 두 함수는 시간 복잡도 O(logN)에 동작한다.
+
+- bisect_left(a, x) : 정렬된 순서를 유지하면서 리스트 a 에 데이터 x 를 삽입할 가장 왼쪽 인덱스를 찾는 메서드
+- bisect_right(a, x) : 정렬된 순서를 유지하면서 리스트 a 에 데이터 x 를 삽입할 가장 오른쪽 인덱스를 찾는 메서드
+
+- 예를 들어 정렬된 리스트 a = [1, 2, 4, 4, 8] 이 있을 때, 새롭게 데이터 4를 삽입하려 한다고 가정하자.
+- 이때 bisect_left(a, 4)와 bisect_right(a, 4)는 각각 인덱스 값으로 2와 4를 반환한다.
+
+```python
+  from bisect import bisect_left, bisect_right
   
+  a = [1, 2, 4, 4, 8]
+  x = 4
+  
+  print(bisect_left(a, x))    # 2
+  print(bisect_right(a, x))    # 4
+```
+
+- 또한 bisect_left() 함수와 bisect_right() 함수는 '정렬된 리스트'에서 '값이 특정 범위에 속하는 원소의 개수'를 구하고자 할 때, 효과적으로 사용될 수 있다.
+- 아래의 count_by_range(a, left_value, right_value) 함수를 확인해보자
+- 이는 정렬된 리스트에서 값이 [left_value, right_value]에 속하는 데이터의 개수를 반환한다.
+- 다시 말해 원소의 값을 x 라고 할 때, left_value <= x <= right_value인 원소의 개수를 O(logN)으로 빠르게 계산할 수 있다.
+
+```python
+    from bisect import bisect_left, bisect_right
+    
+    # 값이 [left_value, right_value]인 데이터의 개수를 반환하는 함수
+    def count_by_range(a, left_value, right_value) :
+       right_index = bisect_right(a, right_value)   # right_value 값의 오른쪽 인덱스를 반환
+       left_index = bisect_left(a, left_value)    # left_value 값의 왼쪽 인덱스를 반환
+       
+       return right_index - left_index
+       
+   # 리스트 선언
+   a = [1, 2, 3, 3, 3, 3, 4, 4, 8, 9]
+   
+   # 값이 4인 데이터 개수 출력
+   print(count_by_range(a, 4, 4))    # 8 - 6 = 2
+   
+   # 값이 [-1, 3] 범위에 있는 데이터의 개수 출력
+   print(count_by_range(a, -1, 3))    # 6 - 0 = 6
+   
+```
+
+
+
+## collections 
+
+- 파이썬의 collections 라이브러리는 유용한 자료구조를 제공하는 표준 라이브러리다.
+- collections 라이브러리의 기능 중에서 코딩 테스트에서 유용하게 사용되는 클래스는 deque와 Counter 이다.
+
+
+## deque - 양 끝에 삽입, 삭제를 할 수 있는 Queue
+
+- 보통 파이썬에서는 deque를 사용해 큐를 구현한다.
+- 별도로 제공되는 Queue 라이브러리가 있는데 일반적인 큐 자료구조를 구현하는 라이브러리는 아니다.
+- 따라서 deque를 이용해 큐를 구현해야 한다는 점을 기억하자.
+
+- 기본 리스트 자료형은 데이터의 삽입, 삭제 등의 다양한 기능을 제공한다.
+- 리스트가 있을 때 중간에 특정한 원소를 삽입한느 것도 가능하다.
+- 하지만 리스트 자료형은 append() 메서드로 데이터를 추가하거나, pop() 메서드로 데이터를 삭제할 때 '가장 뒤쪽 원소'를 기준으로 수행된다.
+- 따라서 앞쪽에 있는 원소를 처리할 때에는 리스트에 포함된 데이터의 개수에 따라서 많은 시간이 소요될 수 있다.
+- 리스트에서 앞쪽에 있는 원소를 삭제하거나 앞쪽에 새 원소를 삽입할 때의 시간 복잡도는 O(N)이다.
+
+- deque는 리스트 자료형과 다르게 인덱싱, 슬라이싱 등의 기능은 사용할 수 없다.
+- 다만, 연속적으로 나열된 데이터의 시작 부분이나 끝 부분에 데이터를 삽입하거나 삭제할 때는 매우 효과적으로 사용될 수 있다.
+- 따라서 deque를 큐 자료구조로 이용할 때, 원소를 삽입할 때에는 append()를 사용하고 원소를 삭제할 때에는 popleft()를 사용하면 된다.
+- 그러면 먼저 들어온 원소가 항상 먼저 나가게 된다.
+- 리스트 [2, 3, 4]의 가장 앞쪽과 뒤쪽에 원소를 삽입하는 예시는 다음과 같다.
+
+```python
+    from collections import deque
+    
+    data = deque([2, 3, 4])
+    data.appendleft(1)    # 첫번째 인덱스에 원소 삽입
+    data.append(5)    # 마지막 인덱스에 원소 삽입
+    
+    print(data)    # deque([1, 2, 3, 4, 5])
+    print(list(data))    # 리스트 자료형으로 변환 [1, 2, 3, 4, 5]
+```
+
+
+## Counter
+
+- 파이썬 collections 라이브러리의 Counter는 등장 횟수를 세는 기능을 제공한다. 구체적으로 리스트와 같은 iterable 객체가 주어졌을 때, 해당 객체 내부의 원소가 몇 번씩 등장했는지를 알려준다.
+- 따라서 원소별 등장 횟수를 세는 기능이 필요할 때 짧은 소스코드로 이를 구현할 수 있다.
+
+
+```python
+    from collections import Counter
+    
+    counter = Counter(['red', 'blue', 'red', 'green', 'blue', 'blue'])    # 리스트를 매개변수로 전달
+    
+    print(counter['blue'])    # blue가 등장한 횟수 출력 - 3
+    print(counter['green'])    # green이 등장한 횟수 출력 - 1
+    print(dict(counter))    # 사전 자료형으로 변환 (키-등장 횟수) - {'red' : 2, 'blue}
+```
+
+
+
+## math
+- math 라이브러리는 자주 사용되는 수학적인 기능을 포함하고 있는 라이브러리
+- 팩토리얼, 제곱근, 최대공약수(GCD) 등을 계산해주는 기능을 포함, 수학 계산을 요구하는 문제를 만났을 때 효과적으로 사용될 수 있다.
+
+```python
+   import math
+   
+   print(math.factorial(5))    # 5 팩토리얼을 출력 - 120
+
+```
+
+- sqrt(x) 함수는 x의 제곱근을 반환
+```python
+   import math
+   
+   print(math.sqrt(7))    # 7의 제곱근을 출력 - 2.6457513....
+   
+
+```
+
+- 최대 공약수를 구해야 할 때는 math 라이브러리의 gcd(a, b) 함수를 이용
+- 이 함수는 a와 b의 최대 공약수를 반환한다.
+
+```python
+   import math
+   
+   
+   print(math.gcd(21, 14))    # 21과 14의 최대 공약수 - 7
+```
+
+- 수학 공식에서 자주 등장하는 상수가 필요할 때에도 math 라이브러리를 사용할 수 있다.
+- math 라이브러리는 파이(pi)나 자연상수 e를 제공
+
+```python
+   import math
+   
+   
+   print(math.pi)    # 파이 출력
+   print(math.e)    # 자연상수 e 출력
+```
 
      
   
