@@ -90,18 +90,3 @@ for idx, text in enumerate(result) :
 print("".join(result).replace("_"," "))
 
 
-
-
-
-
-
-'''
-1. 쉼표를 제거
-2. 4개씩 끊음
-3. 끊은 거를 숫자로 만듦 (0을 제거)
-4. 숫자로 된거를 unit에 맞게 읽는데 맨 앞이 1이면 생략
-
-
-
-
-'''
