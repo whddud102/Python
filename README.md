@@ -1300,7 +1300,46 @@ N X M 크기의 얼음 틀이 있다. 구멍이 뚫려 있는 부분은 0, 칸�
 > (BFS로 구현하려면 원소간 연결 정보가 필요한데, 배열의 모든 원소에 대한 연결 정보를 변환하는 작업 없이 DFS로 구현하는게 더 간단)
 > (DFS로 구현시, 연결 정보 없이 상, 하, 좌, 우에 대해서 반복적으로 확인해보면 됌)
 > 
-> 
+```python
+
+n, m = map(int, input().split())
+graph = []
+
+for _ in range(n) :
+    graph.append( list(map(int, input())))  
+
+
+def dfs (x, y) :
+    # 갈 수 없는 위치이면 False
+
+    if x < 0 or x >= n or y < 0 or y >= m :
+   
+        return False
+      
+    # 모든 탐색을 마치면 True
+    if graph[x][y] == 0 : 
+        graph[x][y] = 1
+
+        dfs(x-1,y)
+        dfs(x+1,y)
+        dfs(x,y-1)
+        dfs(x,y+1)
+
+        return True
+    # 이미 방문했던 위치라면 False  
+    return False
+
+
+result = 0
+for x in range(n) : 
+    for y in range(m) :
+        if dfs(x, y) == True :
+            result += 1
+
+print(result)
+    
+  
+```    
 
 
 
