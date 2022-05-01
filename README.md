@@ -1500,7 +1500,7 @@ def quick_sort(array, start, end) : # 정렬할 리스트, 시작 인덱스, 끝
             left += 1
           
         # 피벗보다 작은 데이터를 찾을 때 까지 반복  
-        while left <= right and array[right] >= array[pivot] :
+        while right >= start and array[right] >= array[pivot] :
             right -= 1
 
         # left 와 right의 인덱스가 엇갈렸다면 작은 데이터(right) 와 피벗을 교체
