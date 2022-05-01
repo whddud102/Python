@@ -1349,6 +1349,59 @@ print(result)
 이 문제는 BFS를 이용했을 때 매우 효과적으로 해결할 수 있다. BFS는 시작 지점에서 가까운 노드부터 차례대로 그래프의 모든 노드를 탐색하기 때문이다. 그러므로 (1,1) 지점에서부터 BFS를 수행하여 모든 노드의 값을 거리 정보로 넣으면 된다. 특정한 노드를 방문하면 그 이전 노드의 거리에 1을 더한 값을 리스트에 넣는다.
 즉, BFS를 이용하여 시작 노드부터 모든 인접 노드들을 탐색하며 거리 정보를 노드에 업데이트 하고, 최종적으로 출구 까지의 거리 정보를 반환
 
+```python
+from collections import deque
+
+n, m = map(int, input().split())
+
+graph = []
+
+for _ in range(n) :
+    graph.append(list(map(int, input())))
+
+# deque 는 인수 없이 초기화 해야함
+queue = deque()
+queue.append((0,0))
+
+# 유효한 위치인지 검사
+def can_move(x, y) :
+    if x < 0 or x >= n or y < 0 or y >= m or graph[x][y] != 1 :
+        return False
+    return True  
+  
+while queue :
+  
+    x, y = queue.popleft()   # 튜플에서 바로 값을 여러개로 꺼내서 사용 가능
+    current_distance = graph[x][y]
+    # 상 하 좌 우 인접 노드를 탐색
+    if can_move(x-1, y) :
+        graph[x-1][y] = current_distance + 1
+        queue.append((x-1, y))
+    if can_move(x+1, y) :
+        graph[x+1][y] = current_distance + 1
+        queue.append((x+1, y))
+    if can_move(x, y-1) :
+        graph[x][y-1] = current_distance + 1
+        queue.append((x, y-1))
+    if can_move(x, y+1) :
+        graph[x][y+1] = current_distance + 1
+        queue.append((x, y+1))  
+
+
+# 그래프 출력 함수
+for data in graph : 
+   for value in data :
+       print(str(value).rjust(3, " "), end=' ')
+   print()  
+    
+
+result = graph[n-1][m-1]
+print(result)
+
+
+
+```
+
 
 
 
