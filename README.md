@@ -1787,5 +1787,22 @@ for target in targets :
   print(result, end=' ')
   
 
+# 계수 정렬을 이용한 구현
+n = int(input())
+parts = list(map(int, input().split()))
+m = int(input())
+targets = list(map(int, input().split()))
+
+count = [0] * (max(parts) + 1)
+
+for part in parts :
+  count[part] += 1
+
+
+for target in targets :
+  if count[target] == 0 :
+    print("no", end=' ')
+  else :
+    print("yes", end=' ')
 '''
 
