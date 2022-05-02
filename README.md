@@ -1739,3 +1739,53 @@ print(input_data)
 sys 라이브러리를 사용할 때는 한 줄 입력받고 나서 rstrip() 함수를 꼭 호출해야 한다. 소스코드에 readline()으로 입력하면 입력 후 엔터가 줄 바꿈 기호로 입력되는데, 이 공백 문자를 제거하려면 rstrip() 함수를 사용해야 한다. 코드가 짧으니, 관행적으로 외워서 사용하자.
 
 
+### 부품 찾기 문제
+동빈이네 전자 매장에는 부품이 N개가 있다. 각 부품은 정수 형태의 고유한 번호가 있다. 어느 날 손님이 M개 종류의 부품을 대량으로 구매하겠다며 당일 날 견적서를 요청했다. 동빈이는 때를 놓치지 않고 손님이 문의한 부품 M개 종류를 모두 확인해서 견적서를 작성해야 한다. 이떄 가게 안에 부품이 모두 있는지 확인하는 프로그램을 작성해보자.
+
+예를 들어 가게의 부품이 총 5개 일 때 부품 번호가 다음과 같다고 하자.
+N = 5 
+[8, 3, 7, 9, 2]
+
+손님은 총 3개의 부품이 있는지 확인 요청했는데 부품 번호는 다음과 같다.
+M = 3
+[5, 7, 9]
+
+이때, 손님이 요청한 부품 번호의 순서대로 부품을 확인해 부품이 있으면 yes, 없으면 no를 출력한다. 구분은 공백으로 한다.
+
+첫째 줄에 정수 N이 주어진다. ( 1 <= N <= 1,000,000 )
+셋째 줄에는 정수 M이 주어진다. ( 1 <= M <= 100,000 ) 
+( 부품의 개수와 검색 대상 부품의 개수도 매우 많으므로 시간을 줄일 수 있는 탐색 방법을 사용하여야함 = 이진 탐색 )
+
+''' python
+
+n = int(input())
+parts = list(map(int, input().split()))
+m = int(input())
+targets = list(map(int, input().split()))
+
+parts.sort()
+
+print(parts)
+
+def binary_search(array, target, start, end) :
+  if start > end : 
+    return "no"
+
+  
+  mid = (start + end) // 2
+
+  if array[mid] > target :
+    return binary_search(array, target, start, mid - 1)
+  elif array[mid] < target :
+    return binary_search(array, target, mid + 1, end)
+  else :
+    return "yes"
+
+for target in targets :
+  
+  result = binary_search(parts, target, 0, n - 1)
+  print(result, end=' ')
+  
+
+'''
+
