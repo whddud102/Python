@@ -1806,3 +1806,18 @@ for target in targets :
     print("yes", end=' ')
 '''
 
+ 단순히 특정 데이터가 등장하는지 검사하기 위해서는 그냥
+
+if data in array : 이런식으로 문법을 사용하면 제일 간단하다.
+data in iterable / data not in interable 
+
+```python
+array = set(map(int, input().split()) # 부품 정보를 set 자료형으로 변환, set = 중복 없이 데이터를 저장, 단순히 특정 데이터가 존재하는지 검사할 때 효과적
+
+if target in array :
+   print("yes",  end=' ')
+else
+   print("no", end=' ')
+
+```
+
