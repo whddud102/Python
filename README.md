@@ -1832,6 +1832,52 @@ else
 
  떡의 개수도 너무 많고, 요청한 떡의 길이 값도 너무 크므로, 완전 탐색 방식이나 시간이 오래 걸리는 알고리즘은 적용 불가능 할 듯 싶다.
  
+ ```python
+ n, m = map(int, input().split())
+
+rice_cakes = list(map(int, input().split()))
+
+end = max(rice_cakes)
+start = 0
+
+
+def get_result(mid) :
+  result = 0
+  
+  for rice_cake in rice_cakes :
+      length = rice_cake - mid
+      if length > 0 : 
+        result +=  length
+  return result
+
+
+while start <= end :
+    mid = (end + start) // 2
+    if get_result(mid) == m :
+      break;
+    elif get_result(mid) > m :
+      start = mid + 1
+    else :
+      end = mid - 1
+  
+
+print(mid)
+
+
+
+
+'''
+1. 떡들 중의 최대 높이 계산
+2. 높이의  (최저값 + 최대 값 // 2) 로 중간 값 계산
+3. 중간 값으로 떡을 자르고 남은 길이 계산
+4. if 남은 길이 == m  
+      return mid
+   elif 남은 길이 > m :
+      start = mid + 1
+   else :
+       end = mid - 1
+'''
  
+ ```
  
 
