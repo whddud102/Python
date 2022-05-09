@@ -2136,7 +2136,21 @@ N-2까지 채우는 경우의 수 + 큰거로 2칸을 채우는 경우 + N-2까�
 
 점화식 a <sub>i</sub> = a <sub>i-1</sub> + a <sub>i-2</sub> x 2
 
+```python
+n = int(input())
 
+dp = [0] * 1001
+dp[1] = 1
+dp[2] = 3
+
+for i in range(3, n+1) :
+  dp[i] = dp[i-1] + dp[i-2] + dp[i-2]
+
+
+result = dp[n] % 796796
+print(dp[n])
+  
+```
 
 
 
