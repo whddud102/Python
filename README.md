@@ -2230,3 +2230,46 @@ print(result)
 
 
 ```
+
+바텀업 방식으로 구성할 경우 점화식은 n을 만드는데 필요한 최소 갯수 = min(n, n-coin)이고
+모든 화폐에 대해서 반복하여 수행하면 됌
+
+예를 들어, 화폐가 2, 3이 있을 때 5를 만드는 최소 갯수는 min(기존의 5를 만드는 최소 갯수, (5-2)=3원에서 2를 더하는 법, (5-3)=2원에서 3을 더하는 법)
+따라서, 화폐 2를 기준으로 반복을 수행할 때 6같은 경우는 2를 3번 써서 만들 수 있으므로 dp[6] = 3,
+이때, 화폐 3을 기준으로 반복을 수행하면, dp[6]= min(dp[6], dp[6-3] = 1 + 1) = 2로 줄여짐
+
+```python
+# 바텀업 방식
+
+n, m = map(int, input().split())
+coins = []
+dp = [987654321] * (m+1)
+
+
+
+for i in range(n) :
+  coin = int(input())
+  coins.append(coin)
+  if coin <= m : 
+     dp[coin] = 1
+
+
+for coin in coins :
+  print("coin :", coin)
+  for target in range(0, m+1) :
+    temp_target = target - coin
+    
+    if temp_target >= 0 :
+      dp[target] = min(dp[target], dp[temp_target] + 1)
+
+result = dp[m]
+
+if result == 987654321 :
+  result = -1
+
+print(result)  
+
+
+   
+
+```
