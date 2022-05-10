@@ -2154,3 +2154,79 @@ print(dp[n])
 
 
 
+#### 효율적인 화폐 구서
+N가지 종류의 화폐가 있다. 이 화폐들의 개수를 최소한으로 이용해서 그 가치의 합이 M원이 되도록 하려고 한다. 이 때 각 화폐는 몇 개라도 사용할 수 있으며, 사용한 화폐의 구성은 같지만 순서만 다른 것은 같은 경우로 구분한다. 예를 들어 2원, 3원 단위의 화폐가 있을 때는 15원을 만들기 위해 3원을 5개 사용하는 것이 최소한의 화폐 개수이다.\
+불가능할 때는 -1 을 출력한다.
+
+입력 예시 :
+2 15
+2
+3
+
+출력 예시 :
+5
+
+입력 예시 :
+3 4
+3
+5
+7
+
+출력 예시 
+-1
+
+```python
+
+(탑다운 방식) - 재귀 
+
+n, m = map(int, input().split());
+coins = []
+dp = [-1] * (m+1)
+
+
+for i in range(n) :
+    coin = int(input())
+    coins.append(coin)
+    if coin <= m :
+        dp[coin] = 1
+
+
+def get_coin_count(target, coins) :
+   
+  
+   if target < 0 :
+       #print(target, "원은 만들 수 없습니다.")
+       return -1
+       
+   if dp[target] != -1 :
+       #print(target, "원을 만드는 최소 횟수는 이미 계산되었습니다.", dp[target], "개\n")
+       print(dp)
+       return dp[target]
+       
+   count = 987654321
+   for coin in coins :
+       temp_target = target - coin
+       #print(temp_target,"(", target, "-", coin, ")원을 만드는데 필요한 최소 갯수를 계산 중입니다..\n") 
+       temp_count = get_coin_count(temp_target, coins) 
+
+       #print("temp_count :", temp_count)
+       if temp_count != -1 :     
+           temp_count += 1
+       
+           if temp_count < count :
+               count = temp_count
+
+   if count != 987654321 :  # 해당 금액을 만들 수 있을 경우에만 개수 반영
+       dp[target] = count
+       #print(target, "원을 만드는데 최소 횟수 :", count)       
+       #print(dp, "\n")
+       return count
+   else :     
+       #print(target, "원을 만들 수 없습니다.")
+       return -1
+    
+result = get_coin_count(m, coins)
+print(result)
+
+
+```
